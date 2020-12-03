@@ -12,6 +12,7 @@ for line in file.read().splitlines():
     # Part 1
     if passwd.count(char) >= int(lbound) and passwd.count(char) <= int(rbound):
         valid_passwd_p1 += 1
+    # Part 2
     if bool(passwd[int(lbound) - 1] == char) ^ bool(passwd[int(rbound) - 1] == char):
         valid_passwd_p2 += 1
 
