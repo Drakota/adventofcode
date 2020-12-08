@@ -1,6 +1,5 @@
 from os.path import dirname, join
 import re
-import collections
 
 current_dir = dirname(__file__)
 file_path = join(current_dir, "input/data.txt")
