@@ -6,23 +6,25 @@ fn parse_input(input: &str) -> Vec<usize> {
         .collect()
 }
 
-fn part1(input: &str) -> usize {
-    parse_input(input)
+fn count_measurement_increases(measurements: Vec<usize>) -> usize {
+    measurements
         .windows(2)
         .flat_map(<&[usize; 2]>::try_from)
         .filter(|[a, b]| b > a)
         .count()
 }
 
+fn part1(input: &str) -> usize {
+    count_measurement_increases(parse_input(input))
+}
+
 fn part2(input: &str) -> usize {
-    parse_input(input)
+    let input = parse_input(input)
         .windows(3)
-        .map(|w| w.iter().sum::<usize>())
-        .collect::<Vec<_>>()
-        .windows(2)
-        .flat_map(<&[usize; 2]>::try_from)
-        .filter(|[a, b]| b > a)
-        .count()
+        .map(|w| w.iter().sum())
+        .collect();
+
+    count_measurement_increases(input)
 }
 
 #[cfg(test)]
