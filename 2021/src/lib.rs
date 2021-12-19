@@ -1,5 +1,8 @@
 #![allow(dead_code)]
 
+extern crate pest;
+extern crate pest_derive;
+
 mod d01;
 mod d02;
 mod d03;
@@ -17,3 +20,4 @@ mod d14;
 mod d15;
 mod d16;
 mod d17;
+mod d18;
