@@ -35,7 +35,8 @@
         "ms-python.python",
         "matklad.rust-analyzer",
         "vadimcn.vscode-lldb",
-        "bungcip.better-toml"
+        "bungcip.better-toml",
+        "llvm-vs-code-extensions.vscode-clangd"
     ],
     "remoteUser": "code"
 }

@@ -29,6 +29,8 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && bash /tmp/scripts/python.sh "none" "/opt/conda" "$PIPX_HOME" "$USERNAME" "false" \
     # Install rust toolchain & cargo
     && bash /tmp/scripts/rust.sh "$CARGO_HOME" "$RUSTUP_HOME" "$USERNAME" "true" "true" \
+    # Install c toolchain
+    && apt-get -y install build-essential make valgrind clang lldb llvm gdb \
     # Clean up
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /root/.gnupg /tmp/scripts
 

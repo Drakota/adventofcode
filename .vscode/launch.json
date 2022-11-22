@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug current C file",
+            "program": "${workspaceFolder}/2022/build/${relativeFileDirname}/solution",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "[2022] Compile current C file",
+        }
+    ]
+}
