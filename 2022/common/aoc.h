@@ -2,7 +2,7 @@ typedef int make_iso_compilers_happy;
 
 #define AOC_MAIN(day, p1_answer, p2_answer)                                    \
   int main() {                                                                 \
-    unsigned char *input = day##_input_data_txt;                               \
+    char *input = (char *)day##_input_data_txt;                                \
     uint64_t p1 = part1(input);                                                \
     if (p1 == p1_answer) {                                                     \
       printf(#day " p1 ✔\n");                                                  \

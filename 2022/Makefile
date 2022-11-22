@@ -1,6 +1,6 @@
 MAKEFLAGS += --silent
 CC := gcc
-CFLAGS := -Wall -Wextra -Werror -Wpedantic -std=gnu11 -ggdb
+CFLAGS := -Wall -Wextra -Werror -Wpedantic -Wno-unused-parameter -Wno-unused-variable -std=gnu11 -ggdb
 
 BUILD_DIR := build/2022
 SOURCE := $(wildcard d*/*.c)
