@@ -17,7 +17,7 @@
                 "isDefault": true
             },
             "options": {
-                "cwd": "${workspaceFolder}/2022"
+                "cwd": "${workspaceFolder}"
             }
         },
         {
@@ -32,7 +32,7 @@
                 "$gcc"
             ],
             "options": {
-                "cwd": "${workspaceFolder}/2022"
+                "cwd": "${workspaceFolder}"
             }
         },
         {
@@ -53,7 +53,7 @@
                 "kind": "build"
             },
             "options": {
-                "cwd": "${workspaceFolder}/2022"
+                "cwd": "${workspaceFolder}"
             }
         },
     ]

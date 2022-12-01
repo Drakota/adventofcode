@@ -1,8 +1,4 @@
 #include "vec.h"
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 void init_vec(vec_t *vec) {
   vec->size = 0;
@@ -59,20 +55,23 @@ void fill_vec_delim(vec_t *vec, char *str, char *delim,
   }
 }
 
-iter_t iter_begin_vec(vec_t *vec) {
-  iter_t iter;
-  iter.vec = vec;
-  iter.index = 0;
-  iter.value = (void *)((size_t *)iter.vec->data)[iter.index];
-  return iter;
+void print_vec(vec_t *vec) {
+  printf("[");
+  for (int i = 0; i < vec->size; i++) {
+    printf("%zu", ((size_t *)vec->data)[i]);
+    if (i != vec->size - 1) {
+      printf(", ");
+    }
+  }
+  printf("]\n");
 }
 
-void iter_next_vec(iter_t *it) {
-  if (it->index < it->vec->size - 1) {
-    it->value = (void *)((size_t *)it->vec->data)[++it->index];
-    return;
+size_t sum_vec(vec_t *vec) {
+  size_t sum = 0;
+  for (int i = 0; i < vec->size; i++) {
+    sum += ((size_t *)vec->data)[i];
   }
-  it->value = NULL;
+  return sum;
 }
 
 void free_vec(vec_t *vec) {

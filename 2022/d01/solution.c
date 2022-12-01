@@ -1,4 +1,5 @@
 #include "../common/aoc.h"
+#include "../common/iter.h"
 #include "../common/vec.h"
 #include "input/data.h"
 #include <stddef.h>
@@ -7,35 +8,49 @@
 #include <stdlib.h>
 #include <string.h>
 
-void *map(vec_t *vec, char *token) { return (void *)(size_t)atoi(token); }
+void *parse_line(vec_t *vec, char *token) {
+  return (void *)(size_t)atoi(token);
+}
 
 int part1(char *input) {
   vec_t v;
   init_vec(&v);
-  fill_vec_delim(&v, input, "\n", map);
+  fill_vec_delim(&v, input, "\n", parse_line);
 
-  size_t v1 = (size_t)pop_vec(&v);
-  size_t v2 = (size_t)pop_vec(&v);
-  size_t v3 = (size_t)pop_vec(&v);
-  size_t v4 = (size_t)pop_vec(&v);
-  size_t v5 = (size_t)pop_vec(&v);
-  size_t v6 = (size_t)pop_vec(&v);
-  size_t v7 = (size_t)pop_front_vec(&v);
-  size_t v8 = (size_t)pop_front_vec(&v);
-  size_t v9 = (size_t)pop_front_vec(&v);
-  size_t v10 = (size_t)pop_front_vec(&v);
+  int increased = 0;
+  iter_t it = iter_begin_vec(&v);
+  size_t compare = (size_t)it.value;
 
-  for (iter_t it = iter_begin_vec(&v); it.value != NULL; iter_next_vec(&it)) {
-    printf("%d, %lu\n", it.index, (size_t)it.value);
+  for (; it.value != NULL; iter_next_vec(&it)) {
+    if ((size_t)it.value > compare) {
+      increased++;
+    }
+    compare = (size_t)it.value;
   }
 
   free_vec(&v);
-  return 10;
+  return increased;
 }
 
 int part2(char *input) {
-  printf("Part 2: %s\n", input);
-  return 20;
+  vec_t v;
+  init_vec(&v);
+  fill_vec_delim(&v, input, "\n", parse_line);
+
+  int increased = 0;
+  iter_t it = window_begin_vec(&v, 3);
+  size_t compare = sum_vec(it.value);
+
+  for (; it.value != NULL; window_next_vec(&it)) {
+    if (sum_vec((vec_t *)it.value) > compare) {
+      increased++;
+    }
+    compare = sum_vec(it.value);
+  }
+
+  window_end_vec(&it);
+  free_vec(&v);
+  return increased;
 }
 
-AOC_MAIN(d01, 10, 20)
+AOC_MAIN(d01, 1466, 1491)

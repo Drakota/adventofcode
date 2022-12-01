@@ -2,7 +2,7 @@ MAKEFLAGS += --silent
 CC := gcc
 CFLAGS := -Wall -Wextra -Werror -Wpedantic -Wno-unused-parameter -Wno-unused-variable -std=gnu11 -ggdb
 
-BUILD_DIR := build/2022
+BUILD_DIR := build
 SOURCE := $(wildcard d*/*.c)
 INPUT := $(wildcard d*/input/*.txt)
 EXECUTABLES := $(patsubst %.c, $(BUILD_DIR)/%, $(SOURCE))
