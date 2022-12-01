@@ -22,5 +22,6 @@ void fill_vec_delim(vec_t *vec, char *str, char *delim,
                     void *(*map)(vec_t *vec, char *token));
 void print_vec(vec_t *vec);
 size_t sum_vec(vec_t *vec);
+void sort_vec(vec_t *vec, int (*cmp)(const void *, const void *));
 void free_vec(vec_t *vec);
 #endif

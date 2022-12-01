@@ -1,4 +1,5 @@
 #include "../common/aoc.h"
+#include "../common/callbacks.h"
 #include "../common/iter.h"
 #include "../common/vec.h"
 #include "input/data.h"
@@ -8,49 +9,38 @@
 #include <stdlib.h>
 #include <string.h>
 
+typedef struct answer {
+  int p1;
+  int p2;
+} answer_t;
+
 void *parse_line(vec_t *vec, char *token) {
-  return (void *)(size_t)atoi(token);
+  vec_t total_calories;
+  init_vec(&total_calories);
+  fill_vec_delim(&total_calories, token, "\n", parse_int);
+  size_t sum = sum_vec(&total_calories);
+  free_vec(&total_calories);
+  return (void *)sum;
 }
 
-int part1(char *input) {
-  vec_t v;
-  init_vec(&v);
-  fill_vec_delim(&v, input, "\n", parse_line);
+answer_t solution(char *input) {
+  vec_t elf_calories;
+  init_vec(&elf_calories);
+  fill_vec_delim(&elf_calories, input, "\n\n", parse_line);
+  sort_vec(&elf_calories, sort_descending);
 
-  int increased = 0;
-  iter_t it = iter_begin_vec(&v);
-  size_t compare = (size_t)it.value;
-
-  for (; it.value != NULL; iter_next_vec(&it)) {
-    if ((size_t)it.value > compare) {
-      increased++;
-    }
-    compare = (size_t)it.value;
+  size_t top_3_sum = 0;
+  for (int i = 0; i < 3; i++) {
+    top_3_sum += ((size_t *)elf_calories.data)[i];
   }
+  size_t max = (size_t)get_vec(&elf_calories, 0);
+  answer_t answer = {max, top_3_sum};
 
-  free_vec(&v);
-  return increased;
+  free_vec(&elf_calories);
+  return answer;
 }
 
-int part2(char *input) {
-  vec_t v;
-  init_vec(&v);
-  fill_vec_delim(&v, input, "\n", parse_line);
+int part1(char *input) { return solution(input).p1; }
+int part2(char *input) { return solution(input).p2; }
 
-  int increased = 0;
-  iter_t it = window_begin_vec(&v, 3);
-  size_t compare = sum_vec(it.value);
-
-  for (; it.value != NULL; window_next_vec(&it)) {
-    if (sum_vec((vec_t *)it.value) > compare) {
-      increased++;
-    }
-    compare = sum_vec(it.value);
-  }
-
-  window_end_vec(&it);
-  free_vec(&v);
-  return increased;
-}
-
-AOC_MAIN(d01, 1466, 1491)
+AOC_MAIN(d01, 70509, 208567)

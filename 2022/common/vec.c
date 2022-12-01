@@ -1,4 +1,29 @@
 #include "vec.h"
+#include <stdio.h>
+
+char *strtokm(char *input, char *delimiter, char **saveptr) {
+  char *string;
+  if (input != NULL)
+    string = input;
+  else
+    string = *saveptr;
+
+  if (string == NULL)
+    return string;
+
+  char *end = strstr(string, delimiter);
+  if (end == NULL) {
+    char *tok = string;
+    *saveptr = NULL;
+    return tok;
+  }
+
+  char *tok = string;
+
+  *end = '\0';
+  *saveptr = end + strlen(delimiter);
+  return tok;
+}
 
 void init_vec(vec_t *vec) {
   vec->size = 0;
@@ -7,14 +32,14 @@ void init_vec(vec_t *vec) {
 }
 
 void *get_vec(vec_t *vec, int index) {
-  if (index >= vec->size) {
+  if (index >= vec->size || index < 0) {
     return NULL;
   }
   return (void *)((size_t *)vec->data)[index];
 }
 
 void *delete_vec(vec_t *vec, int index) {
-  if (index >= vec->size) {
+  if (index >= vec->size || index < 0) {
     return NULL;
   }
   void *data = (void *)((size_t *)vec->data)[index];
@@ -44,14 +69,16 @@ void *pop_front_vec(vec_t *vec) { return delete_vec(vec, 0); }
 
 void fill_vec_delim(vec_t *vec, char *str, char *delim,
                     void *(*map)(vec_t *vec, char *token)) {
-  char *token = strtok(str, delim);
+  char *saveptr;
+  char *token = strtokm(str, delim, &saveptr);
   while (token != NULL) {
     if (map != NULL) {
-      push_vec(vec, map(vec, token));
+      void *data = map(vec, token);
+      push_vec(vec, data);
     } else {
       push_vec(vec, token);
     }
-    token = strtok(NULL, delim);
+    token = strtokm(NULL, delim, &saveptr);
   }
 }
 
@@ -72,6 +99,10 @@ size_t sum_vec(vec_t *vec) {
     sum += ((size_t *)vec->data)[i];
   }
   return sum;
+}
+
+void sort_vec(vec_t *vec, int (*cmp)(const void *, const void *)) {
+  qsort(vec->data, vec->size, sizeof(void *), cmp);
 }
 
 void free_vec(vec_t *vec) {
