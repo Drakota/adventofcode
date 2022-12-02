@@ -9,11 +9,11 @@ EXECUTABLES := $(patsubst %.c, $(BUILD_DIR)/%, $(SOURCE))
 INPUT_HEADERS := $(patsubst %.txt, %.h, $(INPUT))
 COMMON := $(wildcard common/*)
 
-all: $(INPUT_HEADERS) $(EXECUTABLES)
+all: $(EXECUTABLES)
 
 $(INPUT_HEADERS): $(INPUT)
 	@printf "[*] Generating input header %s\n" $@
-	xxd -i $< > $@
+	xxd -i $(subst h,txt,$@) > $@
 
 $(BUILD_DIR)/%.o: %.c $(COMMON) $(INPUT_HEADERS)
 	@printf "[*] Building %s\n" $@
