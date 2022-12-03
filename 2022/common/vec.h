@@ -14,14 +14,17 @@ typedef struct vec {
 
 void init_vec(vec_t *vec);
 void *get_vec(vec_t *vec, int index);
+int find_vec(vec_t *vec, void *data);
 void *delete_vec(vec_t *vec, int index);
 void push_vec(vec_t *vec, void *data);
 void *pop_vec(vec_t *vec);
 void *pop_front_vec(vec_t *vec);
 void fill_vec_delim(vec_t *vec, char *str, char *delim,
                     void *(*map)(vec_t *vec, char *token));
+void fill_vec_str(vec_t *vec, char *data);
 void print_vec(vec_t *vec);
 size_t sum_vec(vec_t *vec);
 void sort_vec(vec_t *vec, int (*cmp)(const void *, const void *));
+void intersect_vec(vec_t *vec1, vec_t *vec2);
 void free_vec(vec_t *vec);
 #endif

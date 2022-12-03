@@ -1,5 +1,7 @@
 #include "vec.h"
+#include <stddef.h>
 #include <stdio.h>
+#include <string.h>
 
 char *strtokm(char *input, char *delimiter, char **saveptr) {
   char *string;
@@ -36,6 +38,15 @@ void *get_vec(vec_t *vec, int index) {
     return NULL;
   }
   return (void *)((size_t *)vec->data)[index];
+}
+
+int find_vec(vec_t *vec, void *data) {
+  for (int i = 0; i < vec->size; i++) {
+    if (get_vec(vec, i) == data) {
+      return i;
+    }
+  }
+  return -1;
 }
 
 void *delete_vec(vec_t *vec, int index) {
@@ -82,6 +93,12 @@ void fill_vec_delim(vec_t *vec, char *str, char *delim,
   }
 }
 
+void fill_vec_str(vec_t *vec, char *data) {
+  for (int i = 0; i < (int)strlen(data); i++) {
+    push_vec(vec, (void *)(size_t)data[i]);
+  }
+}
+
 void print_vec(vec_t *vec) {
   printf("[");
   for (int i = 0; i < vec->size; i++) {
@@ -103,6 +120,15 @@ size_t sum_vec(vec_t *vec) {
 
 void sort_vec(vec_t *vec, int (*cmp)(const void *, const void *)) {
   qsort(vec->data, vec->size, sizeof(void *), cmp);
+}
+
+void intersect_vec(vec_t *vec1, vec_t *vec2) {
+  for (int i = 0; i < vec1->size; i++) {
+    if (find_vec(vec2, get_vec(vec1, i)) == -1) {
+      delete_vec(vec1, i);
+      i--;
+    }
+  }
 }
 
 void free_vec(vec_t *vec) {

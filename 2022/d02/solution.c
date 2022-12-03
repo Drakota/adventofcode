@@ -1,11 +1,5 @@
-#include "../common/aoc.h"
-#include "../common/callbacks.h"
-#include "../common/iter.h"
-#include "../common/vec.h"
+#include "../common/headers.h"
 #include "input/data.h"
-#include <stddef.h>
-#include <stdint.h>
-#include <stdio.h>
 
 void *parse_match_outcome(vec_t *vec, char *token) {
   char opponent_move = token[0] - '@';

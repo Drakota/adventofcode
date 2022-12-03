@@ -36,7 +36,10 @@ iter_t window_begin_vec(vec_t *vec, int size) {
   return iter;
 }
 
-void window_next_vec(iter_t *it) {
+void window_next_vec(iter_t *it, int step) {
+  if (step < 1) {
+    step = 1;
+  }
   if (it->value == NULL) {
     return;
   }
@@ -44,7 +47,8 @@ void window_next_vec(iter_t *it) {
   free_vec(it->value);
   free(it->value);
   if (it->index < it->vec->size - window_size) {
-    it->value = create_window_vec(it->vec, ++it->index, window_size);
+    it->index += step;
+    it->value = create_window_vec(it->vec, it->index, window_size);
     return;
   }
   it->value = NULL;

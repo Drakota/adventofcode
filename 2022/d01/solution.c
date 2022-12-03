@@ -1,13 +1,5 @@
-#include "../common/aoc.h"
-#include "../common/callbacks.h"
-#include "../common/iter.h"
-#include "../common/vec.h"
+#include "../common/headers.h"
 #include "input/data.h"
-#include <stddef.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 typedef struct answer {
   int p1;
