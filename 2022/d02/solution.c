@@ -37,7 +37,7 @@ int part1(char *input) {
   vec_t matches;
   init_vec(&matches);
   fill_vec_delim(&matches, input, "\n", parse_match_outcome);
-  int total = sum_vec(&matches);
+  int total = sum_vec(&matches, NULL);
   free_vec(&matches);
   return total;
 }
@@ -46,7 +46,7 @@ int part2(char *input) {
   vec_t matches;
   init_vec(&matches);
   fill_vec_delim(&matches, input, "\n", parse_score);
-  int total = sum_vec(&matches);
+  int total = sum_vec(&matches, NULL);
   free_vec(&matches);
   return total;
 }

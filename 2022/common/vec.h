@@ -22,9 +22,11 @@ void *pop_front_vec(vec_t *vec);
 void fill_vec_delim(vec_t *vec, char *str, char *delim,
                     void *(*map)(vec_t *vec, char *token));
 void fill_vec_str(vec_t *vec, char *data);
+void copy_vec(vec_t *src, vec_t *dst);
 void print_vec(vec_t *vec);
-size_t sum_vec(vec_t *vec);
+size_t sum_vec(vec_t *vec, size_t (*map)(void *data));
 void sort_vec(vec_t *vec, int (*cmp)(const void *, const void *));
 void intersect_vec(vec_t *vec1, vec_t *vec2);
+void union_vec(vec_t *vec1, vec_t *vec2);
 void free_vec(vec_t *vec);
 #endif

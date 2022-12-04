@@ -10,7 +10,7 @@ void *parse_line(vec_t *vec, char *token) {
   vec_t total_calories;
   init_vec(&total_calories);
   fill_vec_delim(&total_calories, token, "\n", parse_int);
-  size_t sum = sum_vec(&total_calories);
+  size_t sum = sum_vec(&total_calories, NULL);
   free_vec(&total_calories);
   return (void *)sum;
 }

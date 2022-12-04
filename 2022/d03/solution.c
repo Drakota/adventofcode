@@ -28,7 +28,7 @@ int part1(char *input) {
   vec_t rucksacks;
   init_vec(&rucksacks);
   fill_vec_delim(&rucksacks, input, "\n", split_into_compartments);
-  size_t sum = sum_vec(&rucksacks);
+  size_t sum = sum_vec(&rucksacks, NULL);
   free_vec(&rucksacks);
   return sum;
 }

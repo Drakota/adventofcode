@@ -99,6 +99,12 @@ void fill_vec_str(vec_t *vec, char *data) {
   }
 }
 
+void copy_vec(vec_t *src, vec_t *dst) {
+  for (int i = 0; i < src->size; i++) {
+    push_vec(dst, get_vec(src, i));
+  }
+}
+
 void print_vec(vec_t *vec) {
   printf("[");
   for (int i = 0; i < vec->size; i++) {
@@ -110,10 +116,14 @@ void print_vec(vec_t *vec) {
   printf("]\n");
 }
 
-size_t sum_vec(vec_t *vec) {
+size_t sum_vec(vec_t *vec, size_t (*map)(void *data)) {
   size_t sum = 0;
   for (int i = 0; i < vec->size; i++) {
-    sum += ((size_t *)vec->data)[i];
+    if (map != NULL) {
+      sum += map(get_vec(vec, i));
+    } else {
+      sum += (size_t)get_vec(vec, i);
+    }
   }
   return sum;
 }
