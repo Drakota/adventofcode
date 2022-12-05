@@ -33,11 +33,33 @@ void init_vec(vec_t *vec) {
   vec->data = malloc(vec->capacity * sizeof(void *));
 }
 
+void init_vec_2d(vec_t *vec, int size) {
+  vec->size = 0;
+  vec->capacity = size;
+  vec->data = malloc(vec->capacity * sizeof(void *));
+  for (int i = 0; i < vec->capacity; i++) {
+    vec_t *v = malloc(sizeof(vec_t));
+    init_vec(v);
+    push_vec(vec, v);
+  }
+}
+
 void *get_vec(vec_t *vec, int index) {
   if (index >= vec->size || index < 0) {
     return NULL;
   }
   return (void *)((size_t *)vec->data)[index];
+}
+
+void *get_vec_2d(vec_t *vec, int row, int col) {
+  if (row >= vec->size || row < 0) {
+    return NULL;
+  }
+  vec_t *v = get_vec(vec, row);
+  if (col >= v->size || col < 0) {
+    return NULL;
+  }
+  return get_vec(v, col);
 }
 
 int find_vec(vec_t *vec, void *data) {
@@ -69,6 +91,18 @@ void push_vec(vec_t *vec, void *data) {
   ((size_t *)vec->data)[vec->size++] = (size_t)data;
 }
 
+void push_front_vec(vec_t *vec, void *data) {
+  if (vec->size == vec->capacity) {
+    vec->capacity *= 2;
+    vec->data = realloc(vec->data, vec->capacity * sizeof(void *));
+  }
+  for (int i = vec->size; i > 0; i--) {
+    ((size_t *)vec->data)[i] = ((size_t *)vec->data)[i - 1];
+  }
+  ((size_t *)vec->data)[0] = (size_t)data;
+  vec->size++;
+}
+
 void *pop_vec(vec_t *vec) {
   if (vec->size == 0) {
     return NULL;
@@ -79,17 +113,33 @@ void *pop_vec(vec_t *vec) {
 void *pop_front_vec(vec_t *vec) { return delete_vec(vec, 0); }
 
 void fill_vec_delim(vec_t *vec, char *str, char *delim,
-                    void *(*map)(vec_t *vec, char *token)) {
+                    void *(*map)(vec_t *vec, int index, char *token)) {
+  int index = 0;
   char *saveptr;
   char *token = strtokm(str, delim, &saveptr);
   while (token != NULL) {
     if (map != NULL) {
-      void *data = map(vec, token);
+      void *data = map(vec, index, token);
       push_vec(vec, data);
     } else {
       push_vec(vec, token);
     }
     token = strtokm(NULL, delim, &saveptr);
+    index++;
+  }
+}
+
+void fill_vec_2d_delim(vec_t *vec, char *str, char *delim,
+                       void (*map)(vec_t *, int, char *)) {
+  int index = 0;
+  char *saveptr;
+  char *token = strtokm(str, delim, &saveptr);
+  while (token != NULL) {
+    if (map != NULL) {
+      map(vec, index, token);
+    }
+    token = strtokm(NULL, delim, &saveptr);
+    index++;
   }
 }
 
@@ -146,4 +196,12 @@ void free_vec(vec_t *vec) {
   vec->data = NULL;
   vec->size = 0;
   vec->capacity = 0;
+}
+
+void free_vec_2d(vec_t *vec) {
+  for (int i = 0; i < vec->size; i++) {
+    free_vec(get_vec(vec, i));
+    free(get_vec(vec, i));
+  }
+  free_vec(vec);
 }

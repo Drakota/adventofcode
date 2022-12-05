@@ -1,5 +1,3 @@
-typedef int make_iso_compilers_happy;
-
 #define AOC_MAIN(day, p1_answer, p2_answer)                                    \
   int main() {                                                                 \
     char *input = (char *)day##_input_data_txt;                                \

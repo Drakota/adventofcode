@@ -6,7 +6,7 @@ typedef struct answer {
   int p2;
 } answer_t;
 
-void *split_sections(vec_t *vec, char *token) {
+void *split_sections(vec_t *vec, int index, char *token) {
   char *line = strtok(token, "-");
   int s1 = atoi(line);
   line = strtok(NULL, ",");

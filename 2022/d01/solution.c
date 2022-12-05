@@ -6,7 +6,7 @@ typedef struct answer {
   int p2;
 } answer_t;
 
-void *parse_line(vec_t *vec, char *token) {
+void *parse_line(vec_t *vec, int index, char *token) {
   vec_t total_calories;
   init_vec(&total_calories);
   fill_vec_delim(&total_calories, token, "\n", parse_int);

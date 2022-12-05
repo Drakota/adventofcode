@@ -1,7 +1,7 @@
 #include "../common/headers.h"
 #include "input/data.h"
 
-void *parse_match_outcome(vec_t *vec, char *token) {
+void *parse_match_outcome(vec_t *vec, int index, char *token) {
   char opponent_move = token[0] - '@';
   char encrypted_move = token[2] - 'W';
   size_t score = encrypted_move;
@@ -17,7 +17,7 @@ void *parse_match_outcome(vec_t *vec, char *token) {
   return opponent_move == encrypted_move ? (void *)(score + 6) : (void *)score;
 }
 
-void *parse_score(vec_t *vec, char *token) {
+void *parse_score(vec_t *vec, int index, char *token) {
   char opponent_move = token[0] - '@';
   char match_outcome = token[2] - 'W';
   size_t score = (match_outcome - 1) * 3;

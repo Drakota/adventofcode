@@ -6,7 +6,7 @@ size_t char_to_score(char c) {
   return c >= 'a' ? (size_t)c - '`' : (size_t)c - '&';
 }
 
-void *split_into_compartments(vec_t *vec, char *token) {
+void *split_into_compartments(vec_t *vec, int index, char *token) {
   int compartment_size = strlen(token) / 2;
   vec_t compartment1, compartment2;
   init_vec(&compartment1);

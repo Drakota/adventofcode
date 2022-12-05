@@ -13,14 +13,19 @@ typedef struct vec {
 } vec_t;
 
 void init_vec(vec_t *vec);
+void init_vec_2d(vec_t *vec, int size);
 void *get_vec(vec_t *vec, int index);
+void *get_vec_2d(vec_t *vec, int row, int col);
 int find_vec(vec_t *vec, void *data);
 void *delete_vec(vec_t *vec, int index);
 void push_vec(vec_t *vec, void *data);
+void push_front_vec(vec_t *vec, void *data);
 void *pop_vec(vec_t *vec);
 void *pop_front_vec(vec_t *vec);
 void fill_vec_delim(vec_t *vec, char *str, char *delim,
-                    void *(*map)(vec_t *vec, char *token));
+                    void *(*map)(vec_t *vec, int index, char *token));
+void fill_vec_2d_delim(vec_t *vec, char *str, char *delim,
+                       void (*map)(vec_t *vec, int index, char *token));
 void fill_vec_str(vec_t *vec, char *data);
 void copy_vec(vec_t *src, vec_t *dst);
 void print_vec(vec_t *vec);
@@ -29,4 +34,5 @@ void sort_vec(vec_t *vec, int (*cmp)(const void *, const void *));
 void intersect_vec(vec_t *vec1, vec_t *vec2);
 void union_vec(vec_t *vec1, vec_t *vec2);
 void free_vec(vec_t *vec);
+void free_vec_2d(vec_t *vec);
 #endif
