@@ -1,8 +1,5 @@
 #include "../common/headers.h"
 #include "input/data.h"
-#include <stddef.h>
-#include <stdint.h>
-#include <stdio.h>
 
 typedef union movement {
   struct {
