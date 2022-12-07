@@ -1,31 +1,4 @@
 #include "vec.h"
-#include <stddef.h>
-#include <stdio.h>
-#include <string.h>
-
-char *strtokm(char *input, char *delimiter, char **saveptr) {
-  char *string;
-  if (input != NULL)
-    string = input;
-  else
-    string = *saveptr;
-
-  if (string == NULL)
-    return string;
-
-  char *end = strstr(string, delimiter);
-  if (end == NULL) {
-    char *tok = string;
-    *saveptr = NULL;
-    return tok;
-  }
-
-  char *tok = string;
-
-  *end = '\0';
-  *saveptr = end + strlen(delimiter);
-  return tok;
-}
 
 void init_vec(vec_t *vec) {
   vec->size = 0;
@@ -62,13 +35,23 @@ void *get_vec_2d(vec_t *vec, int row, int col) {
   return get_vec(v, col);
 }
 
-int find_vec(vec_t *vec, void *data) {
+int index_vec(vec_t *vec, void *data) {
   for (int i = 0; i < vec->size; i++) {
     if (get_vec(vec, i) == data) {
       return i;
     }
   }
   return -1;
+}
+
+void *find_vec(vec_t *vec, int (*map)(void *, void *), void *cmp) {
+  for (int i = 0; i < vec->size; i++) {
+    void *data = get_vec(vec, i);
+    if (map(data, cmp) == 1) {
+      return data;
+    }
+  }
+  return NULL;
 }
 
 void *delete_vec(vec_t *vec, int index) {
@@ -120,7 +103,9 @@ void fill_vec_delim(vec_t *vec, char *str, char *delim,
   while (token != NULL) {
     if (map != NULL) {
       void *data = map(vec, index, token);
-      push_vec(vec, data);
+      if (data != NULL) {
+        push_vec(vec, data);
+      }
     } else {
       push_vec(vec, token);
     }
@@ -184,7 +169,7 @@ void sort_vec(vec_t *vec, int (*cmp)(const void *, const void *)) {
 
 void intersect_vec(vec_t *vec1, vec_t *vec2) {
   for (int i = 0; i < vec1->size; i++) {
-    if (find_vec(vec2, get_vec(vec1, i)) == -1) {
+    if (index_vec(vec2, get_vec(vec1, i)) == -1) {
       delete_vec(vec1, i);
       i--;
     }

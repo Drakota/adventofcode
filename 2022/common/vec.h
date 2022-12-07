@@ -1,6 +1,7 @@
 #ifndef VEC_H
 #define VEC_H
 
+#include "utils.h"
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,7 +17,8 @@ void init_vec(vec_t *vec);
 void init_vec_2d(vec_t *vec, int size);
 void *get_vec(vec_t *vec, int index);
 void *get_vec_2d(vec_t *vec, int row, int col);
-int find_vec(vec_t *vec, void *data);
+int index_vec(vec_t *vec, void *data);
+void *find_vec(vec_t *vec, int (*map)(void *, void *), void *data);
 void *delete_vec(vec_t *vec, int index);
 void push_vec(vec_t *vec, void *data);
 void push_front_vec(vec_t *vec, void *data);

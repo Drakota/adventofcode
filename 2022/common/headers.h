@@ -4,6 +4,7 @@
 #include "aoc.h"
 #include "callbacks.h"
 #include "iter.h"
+#include "utils.h"
 #include "vec.h"
 #include <assert.h>
 #include <ctype.h>

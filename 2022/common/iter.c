@@ -13,7 +13,11 @@ iter_t iter_begin_vec(vec_t *vec) {
   iter_t iter;
   iter.vec = vec;
   iter.index = 0;
-  iter.value = (void *)((size_t *)iter.vec->data)[iter.index];
+  if (iter.vec->size == 0) {
+    iter.value = NULL;
+  } else {
+    iter.value = (void *)((size_t *)iter.vec->data)[iter.index];
+  }
   return iter;
 }
 
