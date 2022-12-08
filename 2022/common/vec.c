@@ -102,10 +102,7 @@ void fill_vec_delim(vec_t *vec, char *str, char *delim,
   char *token = strtokm(str, delim, &saveptr);
   while (token != NULL) {
     if (map != NULL) {
-      void *data = map(vec, index, token);
-      if (data != NULL) {
-        push_vec(vec, data);
-      }
+      push_vec(vec, map(vec, index, token));
     } else {
       push_vec(vec, token);
     }
@@ -115,7 +112,7 @@ void fill_vec_delim(vec_t *vec, char *str, char *delim,
 }
 
 void fill_vec_2d_delim(vec_t *vec, char *str, char *delim,
-                       void (*map)(vec_t *, int, char *)) {
+                       void *(*map)(vec_t *, int, char *)) {
   int index = 0;
   char *saveptr;
   char *token = strtokm(str, delim, &saveptr);
@@ -128,9 +125,14 @@ void fill_vec_2d_delim(vec_t *vec, char *str, char *delim,
   }
 }
 
-void fill_vec_str(vec_t *vec, char *data) {
+void fill_vec_str(vec_t *vec, char *data,
+                  void *(*map)(vec_t *vec, int index, char c)) {
   for (int i = 0; i < (int)strlen(data); i++) {
-    push_vec(vec, (void *)(size_t)data[i]);
+    if (map != NULL) {
+      push_vec(vec, map(vec, i, (char)data[i]));
+    } else {
+      push_vec(vec, (void *)(size_t)data[i]);
+    }
   }
 }
 
@@ -146,6 +148,21 @@ void print_vec(vec_t *vec) {
     printf("%zu", ((size_t *)vec->data)[i]);
     if (i != vec->size - 1) {
       printf(", ");
+    }
+  }
+  printf("]\n");
+}
+
+void print_2d_vec(vec_t *vec) {
+  printf("[");
+  int col = vec->size;
+  int row = ((vec_t *)get_vec(vec, 0))->size;
+  for (int i = 0; i < col; i++) {
+    for (int j = 0; j < row; j++) {
+      printf("%zu", (size_t)get_vec_2d(vec, i, j));
+      if (j != ((vec_t *)get_vec(vec, i))->size - 1) {
+        printf(", ");
+      }
     }
   }
   printf("]\n");

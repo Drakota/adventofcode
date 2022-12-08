@@ -4,7 +4,7 @@
 int solution(char *input, int window_size) {
   vec_t buffer;
   init_vec(&buffer);
-  fill_vec_str(&buffer, input);
+  fill_vec_str(&buffer, input, NULL);
 
   iter_t iter = window_begin_vec(&buffer, window_size);
   for (; iter.value != NULL; window_next_vec(&iter, 1)) {

@@ -46,9 +46,9 @@ int part2(char *input) {
     init_vec(&compartment2);
     init_vec(&compartment3);
 
-    fill_vec_str(&compartment1, get_vec(iter.value, 0));
-    fill_vec_str(&compartment2, get_vec(iter.value, 1));
-    fill_vec_str(&compartment3, get_vec(iter.value, 2));
+    fill_vec_str(&compartment1, get_vec(iter.value, 0), NULL);
+    fill_vec_str(&compartment2, get_vec(iter.value, 1), NULL);
+    fill_vec_str(&compartment3, get_vec(iter.value, 2), NULL);
     intersect_vec(&compartment1, &compartment2);
     intersect_vec(&compartment1, &compartment3);
 

@@ -1,6 +1,5 @@
 #include "../common/headers.h"
 #include "input/data.h"
-#include <stdint.h>
 
 typedef struct directory {
   char *name;

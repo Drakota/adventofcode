@@ -17,7 +17,7 @@ void *parse_movements(vec_t *vec, int index, char *token) {
   return mov.data;
 }
 
-void parse_stacks(vec_t *vec, int index, char *token) {
+void *parse_stacks(vec_t *vec, int index, char *token) {
   int stack = 0;
   for (int i = 1; i <= 33; i += 4) {
     if (token[i] != ' ') {
@@ -25,6 +25,7 @@ void parse_stacks(vec_t *vec, int index, char *token) {
     }
     stack++;
   }
+  return NULL;
 }
 
 #define SOLUTION(part, func)                                                   \
