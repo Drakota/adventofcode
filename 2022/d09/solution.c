@@ -1,7 +1,5 @@
 #include "../common/headers.h"
 #include "input/data.h"
-#include <stddef.h>
-#include <stdint.h>
 
 typedef struct point {
   int16_t x;
