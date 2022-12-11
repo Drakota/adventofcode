@@ -17,6 +17,7 @@ void init_vec(vec_t *vec);
 void init_vec_2d(vec_t *vec, int size);
 void *get_vec(vec_t *vec, int index);
 void *get_vec_2d(vec_t *vec, int row, int col);
+void set_vec(vec_t *vec, int index, void *data);
 int index_vec(vec_t *vec, void *data);
 void *find_vec(vec_t *vec, int (*map)(void *, void *), void *data);
 void *delete_vec(vec_t *vec, int index);

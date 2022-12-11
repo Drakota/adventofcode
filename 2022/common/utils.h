@@ -8,5 +8,6 @@
 
 char *strtokm(char *input, char *delim, char **saveptr);
 void map_delim(char *str, char *delim, void (*map)(char *, void *), void *data);
+void str_split(char *str, char *delim, char *out[]);
 
 #endif

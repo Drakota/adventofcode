@@ -35,6 +35,13 @@ void *get_vec_2d(vec_t *vec, int row, int col) {
   return get_vec(v, col);
 }
 
+void set_vec(vec_t *vec, int index, void *data) {
+  if (index >= vec->size || index < 0) {
+    return;
+  }
+  ((size_t *)vec->data)[index] = (size_t)data;
+}
+
 int index_vec(vec_t *vec, void *data) {
   for (int i = 0; i < vec->size; i++) {
     if (get_vec(vec, i) == data) {

@@ -37,3 +37,14 @@ void map_delim(char *str, char *delim, void (*map)(char *, void *),
     index++;
   }
 }
+
+void str_split(char *str, char *delim, char *out[]) {
+  int index = 0;
+  char *saveptr;
+  char *token = strtokm(str, delim, &saveptr);
+  while (token != NULL) {
+    out[index] = token;
+    token = strtokm(NULL, delim, &saveptr);
+    index++;
+  }
+}
