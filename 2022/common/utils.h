@@ -7,7 +7,8 @@
 #include <string.h>
 
 char *strtokm(char *input, char *delim, char **saveptr);
-void map_delim(char *str, char *delim, void (*map)(char *, void *), void *data);
+void map_delim(char *str, char *delim, void (*map)(char *, int, void *),
+               void *data);
 void str_split(char *str, char *delim, char *out[]);
 
 #endif

@@ -22,7 +22,7 @@ int sign(int dir) {
   }
 }
 
-void parse_motions(char *token, void *data) {
+void parse_motions(char *token, int index, void *data) {
   data_t *d = data;
   char direction;
   int steps;

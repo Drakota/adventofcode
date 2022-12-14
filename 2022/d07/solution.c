@@ -43,7 +43,7 @@ int find_dir_by_name(void *data, void *cmp) {
   return strcmp(dir->name, name) == 0;
 }
 
-void parse_directories(char *token, void *data) {
+void parse_directories(char *token, int index, void *data) {
   fs_t *fs = data;
   if (token[0] == '$') {
     char *dir_name = NULL;

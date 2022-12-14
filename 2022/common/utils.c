@@ -24,14 +24,14 @@ char *strtokm(char *input, char *delimiter, char **saveptr) {
   return tok;
 }
 
-void map_delim(char *str, char *delim, void (*map)(char *, void *),
+void map_delim(char *str, char *delim, void (*map)(char *, int, void *),
                void *data) {
   int index = 0;
   char *saveptr;
   char *token = strtokm(str, delim, &saveptr);
   while (token != NULL) {
     if (map != NULL) {
-      map(token, data);
+      map(token, index, data);
     }
     token = strtokm(NULL, delim, &saveptr);
     index++;

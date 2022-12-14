@@ -32,7 +32,7 @@ void draw_crt(cpu_state_t *cpu_state) {
   cpu_state->crt_line++;
 }
 
-void execute_program(char *token, void *data) {
+void execute_program(char *token, int index, void *data) {
   cpu_state_t *cpu_state = data;
   if (strcmp(token, "noop") == 0) {
     cpu_state->cycles++;
