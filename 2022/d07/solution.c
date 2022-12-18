@@ -28,7 +28,7 @@ void free_directory(directory_t *directory) {
   if (directory == NULL) {
     return;
   }
-  iter_t iter = iter_begin_vec(directory->children);
+  iter_t iter = iter_begin_vec(directory->children, false);
   for (; iter.value != NULL; iter_next_vec(&iter)) {
     free_directory((directory_t *)iter.value);
   }
@@ -79,7 +79,7 @@ size_t flat_folder_size(directory_t *directory) {
     return 0;
   }
   size_t total_size = directory->size;
-  iter_t iter = iter_begin_vec(directory->children);
+  iter_t iter = iter_begin_vec(directory->children, false);
   for (; iter.value != NULL; iter_next_vec(&iter)) {
     total_size += flat_folder_size((directory_t *)iter.value);
   }
@@ -95,7 +95,7 @@ size_t recursive_filter_size(directory_t *directory, size_t filter_size) {
   if (directory->total_size <= filter_size) {
     total_size += directory->total_size;
   }
-  iter_t iter = iter_begin_vec(directory->children);
+  iter_t iter = iter_begin_vec(directory->children, false);
   for (; iter.value != NULL; iter_next_vec(&iter)) {
     total_size += recursive_filter_size((directory_t *)iter.value, filter_size);
   }
@@ -111,7 +111,7 @@ void recursive_filter_smallest_directory(directory_t *directory,
   if (directory->total_size < *current_smallest) {
     *current_smallest = directory->total_size;
   }
-  iter_t iter = iter_begin_vec(directory->children);
+  iter_t iter = iter_begin_vec(directory->children, false);
   for (; iter.value != NULL; iter_next_vec(&iter)) {
     recursive_filter_smallest_directory((directory_t *)iter.value, filter_size,
                                         current_smallest);

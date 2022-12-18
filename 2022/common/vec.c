@@ -6,6 +6,12 @@ void init_vec(vec_t *vec) {
   vec->data = malloc(vec->capacity * sizeof(void *));
 }
 
+void init_vec_with_capacity(vec_t *vec, int capacity) {
+  vec->size = 0;
+  vec->capacity = capacity;
+  vec->data = malloc(vec->capacity * sizeof(void *));
+}
+
 void init_vec_2d(vec_t *vec, int size) {
   vec->size = 0;
   vec->capacity = size;

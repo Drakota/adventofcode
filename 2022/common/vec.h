@@ -14,6 +14,7 @@ typedef struct vec {
 } vec_t;
 
 void init_vec(vec_t *vec);
+void init_vec_with_capacity(vec_t *vec, int capacity);
 void init_vec_2d(vec_t *vec, int size);
 void *get_vec(vec_t *vec, int index);
 void *get_vec_2d(vec_t *vec, int row, int col);

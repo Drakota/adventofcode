@@ -9,7 +9,7 @@ vec_t *create_window_vec(vec_t *source, int offset, int size) {
   return window;
 }
 
-iter_t iter_begin_vec(vec_t *vec) {
+iter_t iter_begin_vec(vec_t *vec, bool loop) {
   iter_t iter;
   iter.vec = vec;
   iter.index = 0;
@@ -18,10 +18,14 @@ iter_t iter_begin_vec(vec_t *vec) {
   } else {
     iter.value = (void *)((size_t *)iter.vec->data)[iter.index];
   }
+  iter.loop = loop;
   return iter;
 }
 
 void iter_next_vec(iter_t *it) {
+  if (it->loop && it->vec->size > 0 && it->index == it->vec->size - 1) {
+    it->index = 0;
+  }
   if (it->value == NULL) {
     return;
   }
