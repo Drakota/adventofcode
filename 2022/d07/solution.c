@@ -37,9 +37,9 @@ void free_directory(directory_t *directory) {
   free(directory);
 }
 
-int find_dir_by_name(void *data, void *cmp) {
-  directory_t *dir = data;
-  char *name = cmp;
+int find_dir_by_name(const void *data, const void *cmp) {
+  const directory_t *dir = data;
+  const char *name = cmp;
   return strcmp(dir->name, name) == 0;
 }
 

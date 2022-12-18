@@ -16,7 +16,7 @@ void *split_into_compartments(vec_t *vec, int index, char *token) {
     push_vec(&compartment1, (void *)(size_t)token[i]);
     push_vec(&compartment2, (void *)(size_t)token[i + compartment_size]);
   }
-  intersect_vec(&compartment1, &compartment2);
+  intersect_vec(&compartment1, &compartment2, NULL);
   size_t common_item_type = (size_t)get_vec(&compartment1, 0);
 
   free_vec(&compartment1);
@@ -49,8 +49,8 @@ int part2(char *input) {
     fill_vec_str(&compartment1, get_vec(iter.value, 0), NULL);
     fill_vec_str(&compartment2, get_vec(iter.value, 1), NULL);
     fill_vec_str(&compartment3, get_vec(iter.value, 2), NULL);
-    intersect_vec(&compartment1, &compartment2);
-    intersect_vec(&compartment1, &compartment3);
+    intersect_vec(&compartment1, &compartment2, NULL);
+    intersect_vec(&compartment1, &compartment3, NULL);
 
     sum += char_to_score((size_t)get_vec(&compartment1, 0));
     free_vec(&compartment1);

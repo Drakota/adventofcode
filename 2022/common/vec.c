@@ -3,6 +3,14 @@
 void init_vec(vec_t *vec) {
   vec->size = 0;
   vec->capacity = 8;
+  vec->unique = false;
+  vec->data = malloc(vec->capacity * sizeof(void *));
+}
+
+void init_set(vec_t *vec) {
+  vec->size = 0;
+  vec->capacity = 8;
+  vec->unique = true;
   vec->data = malloc(vec->capacity * sizeof(void *));
 }
 
@@ -57,7 +65,7 @@ int index_vec(vec_t *vec, void *data) {
   return -1;
 }
 
-void *find_vec(vec_t *vec, int (*map)(void *, void *), void *cmp) {
+void *find_vec(vec_t *vec, int (*map)(const void *, const void *), void *cmp) {
   for (int i = 0; i < vec->size; i++) {
     void *data = get_vec(vec, i);
     if (map(data, cmp) == 1) {
@@ -85,6 +93,22 @@ void push_vec(vec_t *vec, void *data) {
     vec->data = realloc(vec->data, vec->capacity * sizeof(void *));
   }
   ((size_t *)vec->data)[vec->size++] = (size_t)data;
+}
+
+void push_set(vec_t *vec, void *data, int (*cmp)(const void *, const void *)) {
+  if (vec->size == vec->capacity) {
+    vec->capacity *= 2;
+    vec->data = realloc(vec->data, vec->capacity * sizeof(void *));
+  }
+  if (cmp == NULL) {
+    if (index_vec(vec, data) == -1) {
+      ((size_t *)vec->data)[vec->size++] = (size_t)data;
+    }
+  } else {
+    if (find_vec(vec, cmp, data) == NULL) {
+      ((size_t *)vec->data)[vec->size++] = (size_t)data;
+    }
+  }
 }
 
 void push_front_vec(vec_t *vec, void *data) {
@@ -197,11 +221,19 @@ void sort_vec(vec_t *vec, int (*cmp)(const void *, const void *)) {
   qsort(vec->data, vec->size, sizeof(void *), cmp);
 }
 
-void intersect_vec(vec_t *vec1, vec_t *vec2) {
+void intersect_vec(vec_t *vec1, vec_t *vec2,
+                   int (*cmp)(const void *, const void *)) {
   for (int i = 0; i < vec1->size; i++) {
-    if (index_vec(vec2, get_vec(vec1, i)) == -1) {
-      delete_vec(vec1, i);
-      i--;
+    if (cmp == NULL) {
+      if (index_vec(vec2, get_vec(vec1, i)) == -1) {
+        delete_vec(vec1, i);
+        i--;
+      } else {
+        if (find_vec(vec2, cmp, get_vec(vec1, i)) == NULL) {
+          delete_vec(vec1, i);
+          i--;
+        }
+      }
     }
   }
 }
